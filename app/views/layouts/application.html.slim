@@ -1,0 +1,6 @@
+- content_for :base_content do
+  .scripts
+    = javascript_include_tag :application
+    = yield :bottom
+
+= render file: 'layouts/base'

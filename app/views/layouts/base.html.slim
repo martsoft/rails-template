@@ -1,0 +1,15 @@
+doctype html
+html (data-ng-app='tp')
+  head
+    title Application
+
+    meta(content='text/html;charset=UTF-8' http-equiv='Content-Type')
+    meta(content='width=device-width' name='viewport')
+
+    = stylesheet_link_tag :application, media: :all
+    = include_gon
+    = csrf_meta_tags
+
+    = yield :head
+  body
+    = content_for?(:base_content) ? yield(:base_content) : yield

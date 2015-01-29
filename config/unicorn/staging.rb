@@ -1,0 +1,23 @@
+root = '/var/www/$PROJECT_NAME/current'
+
+preload_app true
+
+worker_processes 2
+working_directory root
+
+listen      '/tmp/unicorn.$PROJECT_NAME.sock'
+pid         "#{root}/tmp/pids/unicorn.pid"
+stderr_path "#{root}/log/unicorn.err.log"
+stdout_path "#{root}/log/unicorn.out.log"
+
+timeout 300
+
+before_fork do |server, worker|
+  defined?(ActiveRecord::Base) and
+      ActiveRecord::Base.connection.disconnect!
+end
+
+after_fork do |server, worker|
+  defined?(ActiveRecord::Base) and
+      ActiveRecord::Base.establish_connection
+end
